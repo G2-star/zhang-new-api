@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  new-api:
+    image: agaid1mnjh45/new-api:v1.0.0-conversation
+    container_name: new-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      # ===== 数据库配置 =====
+      - SQL_DSN=postgresql://root:123456@postgres:5432/new-api
+
+      # ===== 会话密钥（必须修改为随机字符串）=====
+      - SESSION_SECRET=please-change-this-to-random-string
+
+      # ===== 对话记录功能 =====
+      - CONVERSATION_LOG_ENABLED=true          # 启用对话记录
+      - CONVERSATION_ARCHIVE_DAYS=30           # 30天后归档到归档表
+      - CONVERSATION_CLEANUP_DAYS=365          # 365天后从归档表删除
+
+      # ===== 其他配置 =====
+      # - DEBUG=true                           # 调试模式
+      # - REDIS_CONN_STRING=redis://redis:6379 # Redis 缓存
+    depends_on:
+      - postgres
+    networks:
+      - new-api-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: new-api-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=new-api
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - new-api-network
+    # 可选：暴露端口供外部访问
+    # ports:
+    #   - "5432:5432"
+
+networks:
+  new-api-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+
+# ===== 使用说明 =====
+# 1. 启动服务
+#    docker-compose up -d
+#
+# 2. 查看日志
+#    docker-compose logs -f new-api
+#
+# 3. 停止服务
+#    docker-compose down
+#
+# 4. 完全清理（包括数据）
+#    docker-compose down -v
+#
+# 5. 访问管理后台
+#    http://localhost:3000
+#    默认账号: root / 123456
+#
+# 6. 访问对话记录
+#    http://localhost:3000/console/conversation
+#    （需要管理员权限）
