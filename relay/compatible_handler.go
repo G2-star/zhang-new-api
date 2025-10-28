@@ -186,6 +186,15 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 	} else {
 		postConsumeQuota(c, info, usage.(*dto.Usage), "")
 	}
+
+	// 记录对话内容（如果启用）
+	if textResponse, exists := c.Get("text_response"); exists {
+		if response, ok := textResponse.(*dto.OpenAITextResponse); ok {
+			responseContent := ExtractResponseContent(response)
+			RecordConversationHelper(c, info, textReq, responseContent, usage.(*dto.Usage), info.StartTime)
+		}
+	}
+
 	return nil
 }
 

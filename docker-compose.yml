@@ -25,7 +25,7 @@ version: '3.8'
 services:
   new-api:
     # 🎉 二开版本镜像（包含对话记录功能）
-    image: zhang/new-api:v1.0.0-conversation
+    image: agaid1mnjh45/new-api:v1.0.0-conversation
     container_name: new-api
     restart: unless-stopped
     command: --log-dir /app/logs
