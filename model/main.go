@@ -213,7 +213,13 @@ func InitDB() (err error) {
 func InitLogDB() (err error) {
 	if os.Getenv("LOG_SQL_DSN") == "" {
 		LOG_DB = DB
-		return
+		// 即使使用相同的数据库，也需要执行日志表迁移
+		if !common.IsMasterNode {
+			return nil
+		}
+		common.SysLog("log database migration started (using main database)")
+		err = migrateLOGDB()
+		return err
 	}
 	db, err := chooseDB("LOG_SQL_DSN", true)
 	if err == nil {
