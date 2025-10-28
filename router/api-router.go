@@ -198,6 +198,26 @@ func SetApiRouter(router *gin.Engine) {
 		logRoute.GET("/self", middleware.UserAuth(), controller.GetUserLogs)
 		logRoute.GET("/self/search", middleware.UserAuth(), controller.SearchUserLogs)
 
+		// 对话记录路由
+		conversationRoute := apiRouter.Group("/conversation")
+		conversationRoute.Use(middleware.AdminAuth())
+		{
+			conversationRoute.GET("/", controller.GetConversations)
+			conversationRoute.GET("/:id", controller.GetConversationDetail)
+			conversationRoute.DELETE("/", controller.DeleteConversations)
+			conversationRoute.POST("/delete_by_condition", controller.DeleteConversationsByCondition)
+			conversationRoute.GET("/stats", controller.GetConversationStats)
+			conversationRoute.GET("/setting", controller.GetConversationLogSetting)
+			conversationRoute.PUT("/setting", controller.UpdateConversationLogSetting)
+
+			// 维护和优化接口
+			conversationRoute.POST("/archive", controller.ArchiveOldConversations)
+			conversationRoute.POST("/cleanup_archives", controller.CleanupOldArchives)
+			conversationRoute.POST("/optimize", controller.OptimizeConversationTables)
+			conversationRoute.GET("/table_stats", controller.GetConversationTableStats)
+			conversationRoute.GET("/search_archive", controller.SearchArchivedConversations)
+		}
+
 		dataRoute := apiRouter.Group("/data")
 		dataRoute.GET("/", middleware.AdminAuth(), controller.GetAllQuotaDates)
 		dataRoute.GET("/self", middleware.UserAuth(), controller.GetUserQuotaDates)

@@ -72,6 +72,7 @@ var DebugEnabled bool
 var MemoryCacheEnabled bool
 
 var LogConsumeEnabled = true
+var ConversationLogEnabled = false // 对话记录功能开关，默认关闭
 
 var SMTPServer = ""
 var SMTPPort = 587
