@@ -104,6 +104,12 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         className:
           localStorage.getItem('enable_task') === 'true' ? '' : 'tableHiddle',
       },
+      {
+        text: t('对话记录'),
+        itemKey: 'conversation',
+        to: '/conversation',
+        className: isAdmin() ? '' : 'tableHiddle',
+      },
     ];
 
     // 根据配置过滤项目
@@ -168,12 +174,6 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         text: t('用户管理'),
         itemKey: 'user',
         to: '/user',
-        className: isAdmin() ? '' : 'tableHiddle',
-      },
-      {
-        text: t('对话记录'),
-        itemKey: 'conversation',
-        to: '/conversation',
         className: isAdmin() ? '' : 'tableHiddle',
       },
       {

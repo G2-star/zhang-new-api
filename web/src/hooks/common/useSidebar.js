@@ -51,6 +51,7 @@ export const useSidebar = () => {
       log: true,
       midjourney: true,
       task: true,
+      conversation: true,
     },
     personal: {
       enabled: true,
@@ -63,7 +64,6 @@ export const useSidebar = () => {
       models: true,
       redemption: true,
       user: true,
-      conversation: true,
       setting: true,
     },
   };
