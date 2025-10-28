@@ -187,8 +187,8 @@ func GetConversationTableStats(c *gin.Context) {
 
 // SearchArchivedConversations 搜索归档表（扩展查询功能）
 func SearchArchivedConversations(c *gin.Context) {
-	userId := c.GetInt("id")
-	if !model.IsAdmin(userId) {
+	currentUserId := c.GetInt("id")
+	if !model.IsAdmin(currentUserId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",

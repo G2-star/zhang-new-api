@@ -12,8 +12,8 @@ import (
 // GetConversations 获取对话记录列表（支持筛选）
 func GetConversations(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	userId := c.GetInt("id")
-	if !model.IsAdmin(userId) {
+	currentUserId := c.GetInt("id")
+	if !model.IsAdmin(currentUserId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -203,8 +203,8 @@ func DeleteConversationsByCondition(c *gin.Context) {
 // GetConversationStats 获取对话统计信息
 func GetConversationStats(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	userId := c.GetInt("id")
-	if !model.IsAdmin(userId) {
+	currentUserId := c.GetInt("id")
+	if !model.IsAdmin(currentUserId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
