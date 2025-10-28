@@ -4,6 +4,8 @@ package main
 
 import (
 	"context"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -30,7 +32,7 @@ func StartConversationMaintenanceTasks() {
 
 		for {
 			archiveDays := 30 // 归档30天前的数据
-			if days := common.GetEnvInt("CONVERSATION_ARCHIVE_DAYS", 30); days > 0 {
+			if days := GetEnvInt("CONVERSATION_ARCHIVE_DAYS", 30); days > 0 {
 				archiveDays = days
 			}
 
@@ -64,7 +66,7 @@ func StartConversationMaintenanceTasks() {
 
 		for {
 			cleanupDays := 365 // 清理1年前的归档数据
-			if days := common.GetEnvInt("CONVERSATION_CLEANUP_DAYS", 365); days > 0 {
+			if days := GetEnvInt("CONVERSATION_CLEANUP_DAYS", 365); days > 0 {
 				cleanupDays = days
 			}
 
