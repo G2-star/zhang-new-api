@@ -99,6 +99,9 @@ func InitEnv() {
 	GlobalWebRateLimitNum = GetEnvOrDefault("GLOBAL_WEB_RATE_LIMIT", 60)
 	GlobalWebRateLimitDuration = int64(GetEnvOrDefault("GLOBAL_WEB_RATE_LIMIT_DURATION", 180))
 
+	// Initialize conversation log feature
+	ConversationLogEnabled = GetEnvOrDefaultBool("CONVERSATION_LOG_ENABLED", false)
+
 	initConstantEnv()
 }
 
