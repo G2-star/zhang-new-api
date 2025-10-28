@@ -243,8 +243,8 @@ const ConversationManagement = () => {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
-      <h2>对话记录管理</h2>
+    <div className="mt-[60px] px-2" style={{ paddingTop: '20px', paddingBottom: '24px' }}>
+      <h2 style={{ marginTop: 0 }}>对话记录管理</h2>
 
       {/* 功能开关状态 */}
       <div style={{ marginBottom: 16, padding: 12, background: '#f6f7f9', borderRadius: 4 }}>
