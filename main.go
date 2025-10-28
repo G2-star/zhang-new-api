@@ -160,6 +160,9 @@ func main() {
 		port = strconv.Itoa(*common.Port)
 	}
 
+	// 启动对话记录自动维护任务
+	model.StartConversationMaintenance()
+
 	// Log startup success message
 	common.LogStartupSuccess(startTime, port)
 
