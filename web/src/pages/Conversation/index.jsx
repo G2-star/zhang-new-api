@@ -3,8 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Modal, DatePicker, Input, Space, Tag, Popconfirm } from '@douyinfe/semi-ui';
-import { API, showError, showSuccess, showInfo } from '../../helpers';
-import { renderTimestamp } from '../../helpers/render';
+import { API, showError, showSuccess, showInfo, timestamp2string } from '../../helpers';
 
 const ConversationManagement = () => {
   const [conversations, setConversations] = useState([]);
@@ -210,7 +209,7 @@ const ConversationManagement = () => {
       title: '创建时间',
       dataIndex: 'created_at',
       width: 180,
-      render: (text) => renderTimestamp(text),
+      render: (text) => timestamp2string(text),
     },
     {
       title: '操作',
@@ -369,7 +368,7 @@ const ConversationManagement = () => {
               <strong>响应时间:</strong> {currentDetail.use_time} ms
             </p>
             <p>
-              <strong>创建时间:</strong> {renderTimestamp(currentDetail.created_at)}
+              <strong>创建时间:</strong> {timestamp2string(currentDetail.created_at)}
             </p>
 
             <h4 style={{ marginTop: 20 }}>请求消息</h4>
