@@ -337,6 +337,10 @@ func migrateLOGDB() error {
 	if err = LOG_DB.AutoMigrate(&Conversation{}); err != nil {
 		return err
 	}
+	// 迁移对话记录归档表
+	if err = LOG_DB.AutoMigrate(&ConversationArchive{}); err != nil {
+		return err
+	}
 	return nil
 }
 
