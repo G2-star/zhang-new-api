@@ -12,7 +12,8 @@ import (
 // GetConversations 获取对话记录列表（支持筛选）
 func GetConversations(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -64,7 +65,8 @@ func GetConversations(c *gin.Context) {
 // GetConversationDetail 获取单条对话详情
 func GetConversationDetail(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -100,7 +102,8 @@ func GetConversationDetail(c *gin.Context) {
 // DeleteConversations 批量删除对话记录
 func DeleteConversations(c *gin.Context) {
 	// 权限检查：只有管理员可以删除
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -147,7 +150,8 @@ func DeleteConversations(c *gin.Context) {
 // DeleteConversationsByCondition 按条件批量删除对话记录
 func DeleteConversationsByCondition(c *gin.Context) {
 	// 权限检查：只有管理员可以删除
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -199,7 +203,8 @@ func DeleteConversationsByCondition(c *gin.Context) {
 // GetConversationStats 获取对话统计信息
 func GetConversationStats(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -231,7 +236,8 @@ func GetConversationStats(c *gin.Context) {
 // UpdateConversationLogSetting 更新对话记录功能开关
 func UpdateConversationLogSetting(c *gin.Context) {
 	// 权限检查：只有管理员可以修改
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -263,7 +269,8 @@ func UpdateConversationLogSetting(c *gin.Context) {
 // GetConversationLogSetting 获取对话记录功能开关状态
 func GetConversationLogSetting(c *gin.Context) {
 	// 权限检查：只有管理员可以查看
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",

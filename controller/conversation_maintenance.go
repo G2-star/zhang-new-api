@@ -13,7 +13,8 @@ import (
 
 // ArchiveOldConversations 归档旧对话（管理员接口）
 func ArchiveOldConversations(c *gin.Context) {
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -72,7 +73,8 @@ func ArchiveOldConversations(c *gin.Context) {
 
 // CleanupOldArchives 清理归档表中的超旧数据
 func CleanupOldArchives(c *gin.Context) {
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -131,7 +133,8 @@ func CleanupOldArchives(c *gin.Context) {
 
 // OptimizeConversationTables 优化对话表（重建索引、回收空间）
 func OptimizeConversationTables(c *gin.Context) {
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -157,7 +160,8 @@ func OptimizeConversationTables(c *gin.Context) {
 
 // GetConversationTableStats 获取对话表统计信息
 func GetConversationTableStats(c *gin.Context) {
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
@@ -183,7 +187,8 @@ func GetConversationTableStats(c *gin.Context) {
 
 // SearchArchivedConversations 搜索归档表（扩展查询功能）
 func SearchArchivedConversations(c *gin.Context) {
-	if !common.IsAdmin(c) {
+	userId := c.GetInt("id")
+	if !model.IsAdmin(userId) {
 		c.JSON(http.StatusForbidden, gin.H{
 			"success": false,
 			"message": "无权限访问",
