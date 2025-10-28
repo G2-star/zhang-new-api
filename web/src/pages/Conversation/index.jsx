@@ -2,8 +2,8 @@
 // 对话记录管理页面
 
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Form, Modal, DatePicker, Input, Space, Tag, Popconfirm, message } from '@douyinfe/semi-ui';
-import { API } from '../../helpers';
+import { Button, Table, Form, Modal, DatePicker, Input, Space, Tag, Popconfirm } from '@douyinfe/semi-ui';
+import { API, showError, showSuccess, showInfo } from '../../helpers';
 import { renderTimestamp } from '../../helpers/render';
 
 const ConversationManagement = () => {
@@ -45,10 +45,10 @@ const ConversationManagement = () => {
         setConversations(res.data.data.data || []);
         setTotal(res.data.data.total || 0);
       } else {
-        message.error('加载失败：' + res.data.message);
+        showError('加载失败：' + res.data.message);
       }
     } catch (error) {
-      message.error('加载失败：' + error.message);
+      showError('加载失败：' + error.message);
     } finally {
       setLoading(false);
     }
@@ -71,14 +71,14 @@ const ConversationManagement = () => {
     try {
       const res = await API.put('/api/conversation/setting', { enabled });
       if (res.data.success) {
-        message.success('设置已更新');
+        showSuccess('设置已更新');
         setConversationLogEnabled(enabled);
         setSettingVisible(false);
       } else {
-        message.error('更新失败：' + res.data.message);
+        showError('更新失败：' + res.data.message);
       }
     } catch (error) {
-      message.error('更新失败：' + error.message);
+      showError('更新失败：' + error.message);
     }
   };
 
@@ -90,17 +90,17 @@ const ConversationManagement = () => {
         setCurrentDetail(res.data.data);
         setDetailVisible(true);
       } else {
-        message.error('加载失败：' + res.data.message);
+        showError('加载失败：' + res.data.message);
       }
     } catch (error) {
-      message.error('加载失败：' + error.message);
+      showError('加载失败：' + error.message);
     }
   };
 
   // 批量删除
   const batchDelete = async () => {
     if (selectedKeys.length === 0) {
-      message.warning('请选择要删除的记录');
+      showInfo('请选择要删除的记录');
       return;
     }
 
@@ -109,34 +109,34 @@ const ConversationManagement = () => {
         data: { ids: selectedKeys },
       });
       if (res.data.success) {
-        message.success(`成功删除 ${res.data.data.deleted} 条记录`);
+        showSuccess(`成功删除 ${res.data.data.deleted} 条记录`);
         setSelectedKeys([]);
         loadConversations();
       } else {
-        message.error('删除失败：' + res.data.message);
+        showError('删除失败：' + res.data.message);
       }
     } catch (error) {
-      message.error('删除失败：' + error.message);
+      showError('删除失败：' + error.message);
     }
   };
 
   // 按条件删除
   const deleteByCondition = async () => {
     if (!filters.username && !filters.model_name && !filters.start_time && !filters.end_time) {
-      message.warning('请至少选择一个筛选条件');
+      showInfo('请至少选择一个筛选条件');
       return;
     }
 
     try {
       const res = await API.post('/api/conversation/delete_by_condition', filters);
       if (res.data.success) {
-        message.success(`成功删除 ${res.data.data.deleted} 条记录`);
+        showSuccess(`成功删除 ${res.data.data.deleted} 条记录`);
         loadConversations();
       } else {
-        message.error('删除失败：' + res.data.message);
+        showError('删除失败：' + res.data.message);
       }
     } catch (error) {
-      message.error('删除失败：' + error.message);
+      showError('删除失败：' + error.message);
     }
   };
 
@@ -226,10 +226,10 @@ const ConversationManagement = () => {
             onConfirm={() => {
               API.delete('/api/conversation/', { data: { ids: [record.id] } }).then((res) => {
                 if (res.data.success) {
-                  message.success('删除成功');
+                  showSuccess('删除成功');
                   loadConversations();
                 } else {
-                  message.error('删除失败：' + res.data.message);
+                  showError('删除失败：' + res.data.message);
                 }
               });
             }}
